@@ -59,7 +59,7 @@ function App() {
         }
 
         const payload = {
-          'imagem': image,
+          'imagem': image
         }
         
         const result = await uploadImage(id, auth_token, payload);
