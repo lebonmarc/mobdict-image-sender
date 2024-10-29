@@ -58,11 +58,12 @@ function App() {
           throw new Error('Você não tem permissão para enviar imagens');
         }
 
-        const payload = {
-          'imagem': image
-        }
+        const blob = await (await fetch(image)).blob(); // Convertendo base64 em Blob
+        const formData = new FormData();
+        formData.append('imagem', blob, 'image.png'); // Adicionando a imagem ao FormData
+
         
-        const result = await uploadImage(id, auth_token, payload);
+        const result = await uploadImage(id, auth_token, formData);
 
         if (!result?.data?.message || typeof result?.data?.message !== 'string') {
           throw new Error(result?.data?.error || 'Não foi possível enviar o arquivo. Por favor, tente novamente!');

@@ -1,12 +1,11 @@
 import React from 'react';
-import {Image, Modal, TouchableOpacity, View, Dimensions} from 'react-native';
+import {Image, Modal, TouchableOpacity, View, Dimensions, Text, ScrollView} from 'react-native';
 
 import styles from './styles';
 
 import Button from '../Button';
 import colors from '../../theme/colors';
 
-import {Text} from 'react-native';
 import TopLine from './TopLine';
 import Lines from './Lines';
 import CloseIcon from './CloseIcon';
@@ -42,6 +41,7 @@ const ModalPreviewImage = ({
             width: '100%',
             backgroundColor: 'rgba(10, 40, 84, 0.9)',
           }}>
+          <ScrollView>
           {isSuccess ? (
             <View
               style={{
@@ -236,6 +236,7 @@ const ModalPreviewImage = ({
               </View>
             </View>
           )}
+          </ScrollView>
         </View>
       </View>
     </Modal>
