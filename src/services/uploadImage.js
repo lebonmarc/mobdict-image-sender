@@ -1,8 +1,7 @@
-const uploadImage = async (id, auth_token, payload) => {
+const uploadImage = async (id, auth_token, formData) => {
   const url = `https://backend.mobdict.com/api/mis/${id}`;
+  
   const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${auth_token}`,
   };
 
@@ -10,7 +9,7 @@ const uploadImage = async (id, auth_token, payload) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify(payload),
+      body: formData,
     });
 
     const data = await response.json();

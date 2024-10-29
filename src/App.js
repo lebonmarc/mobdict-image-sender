@@ -22,16 +22,10 @@ function App() {
   const launchNativeGallery = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const reader = new FileReader();
-  
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setNewTextImage(base64String);
-        saveImageSelected(base64String);
-        e.target.value = '';
-      };
-  
-      reader.readAsDataURL(file);
+      setNewTextImage(URL.createObjectURL(file));
+      setPreview(URL.createObjectURL(file));
+      saveImageSelected(file);
+      e.target.value = ''; 
     }
   };
 
@@ -47,8 +41,7 @@ function App() {
     setIsLoading(true);
     try {
       if (cropper) {
-        const base64Image = cropper.getCroppedCanvas().toDataURL("image/png");
-        const image = base64Image.split(',')[1];
+        const blob = await new Promise((resolve) => cropper.getCroppedCanvas().toBlob(resolve, 'image/png'));
         
         const params = new URLSearchParams(window.location.search)
         const id = params.get('id')
@@ -58,7 +51,6 @@ function App() {
           throw new Error('Você não tem permissão para enviar imagens');
         }
 
-        const blob = await (await fetch(image)).blob(); // Convertendo base64 em Blob
         const formData = new FormData();
         formData.append('imagem', blob, 'image.png'); // Adicionando a imagem ao FormData
 
